@@ -18,10 +18,10 @@ func GetLocation (ip string) (*GeoLocation, error) {
 
     // execute request
     resp, err := http.DefaultClient.Do(req)
-    defer resp.Body.Close()
     if err != nil {
         return nil, err
     }
+    defer resp.Body.Close()
 
     // check HTTP response code
     if resp.StatusCode != http.StatusOK {
@@ -33,5 +33,10 @@ func GetLocation (ip string) (*GeoLocation, error) {
     if err := json.NewDecoder(resp.Body).Decode(&geoLocation); err != nil {
         return nil, err
     }
+
+    if geoLocation.Status != "success" {
+        return nil, fmt.Errorf("%s: %s", geoLocation.Status, geoLocation.Message)
+    }
+
     return &geoLocation, nil
 }
