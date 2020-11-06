@@ -12,9 +12,14 @@ func findZoneIndex(instant int64, zoneSet []tzdb.Zone) (int, error) {
         return 0, fmt.Errorf("No zone available!")
     }
 
-    // abort if all zones are in the past
+    // abort if all zones are in the future
     if zoneSet[0].Start > instant {
         return 0, fmt.Errorf("No suitable zone found!")
+    }
+
+    // get last one if all zones are in the past
+    if zoneSet[len(zoneSet) - 1].Start < instant {
+        return len(zoneSet) - 1, nil
     }
 
     lo := 0
