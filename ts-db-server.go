@@ -130,15 +130,15 @@ func getCorrectZones (zi int, zones []tzdb.Zone) (current, next Zone) {
     var boolStr = map[bool]string{true: "1", false: "0"}
 
     current.Name = zones[zi].Name
-    current.Start = fmt.Sprintf("%d", zones[zi].Start)
-    current.End = fmt.Sprintf("%d", zones[zi].End)
+    current.Start = time.Unix(zones[zi].Start, 0).Format(dateFormat)
+    current.End = time.Unix(zones[zi].End, 0).Format(dateFormat)
     current.IsDST = boolStr[zones[zi].IsDST]
     current.Offset = fmt.Sprintf("%d", zones[zi].Offset)
 
     if zi < (len(zones) - 1) {
         next.Name = zones[zi + 1].Name
-        next.Start = fmt.Sprintf("%d", zones[zi + 1].Start)
-        next.End = fmt.Sprintf("%d", zones[zi + 1].End)
+        next.Start = time.Unix(zones[zi + 1].Start, 0).Format(dateFormat)
+        next.End = time.Unix(zones[zi + 1].End, 0).Format(dateFormat)
         next.IsDST = boolStr[zones[zi + 1].IsDST]
         next.Offset = fmt.Sprintf("%d", zones[zi + 1].Offset)
     } else {
