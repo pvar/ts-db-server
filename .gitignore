@@ -1,3 +1,6 @@
 notes/todo.txt
 *sqlite
 bin/*
+*sqlite-*
+ts-db-server
+ts-db-generator
